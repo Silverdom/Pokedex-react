@@ -1,7 +1,9 @@
+import PokeHeader from "./components/PokeHeader";
+
 function App() {
   return (
     <>
-      <h1>Hello</h1>
+      <PokeHeader />
     </>
   );
 }
