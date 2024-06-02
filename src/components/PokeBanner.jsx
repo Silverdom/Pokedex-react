@@ -17,13 +17,15 @@ const PokeBanner = ({ pokemonId = 6 }) => {
         style={{
           backgroundColor: pokemonTypeColorCodes[pokemonTheme],
         }}
-        className={`pb-5 mb-5 position-relative overflow-hidden container-fluid`}
+        className={`pb-12 pt-12`}
       >
-        <div className="py-5 container">
-          <div className="align-items-center row">
-            <div className="py-5 order-last order-lg-first col-xl-6 col-sm-12">
-              <h1 value="PokédExplore">{pokemonDetails.name}</h1>
-              <div className="d-flex gap-2 mb-3 fade-in-top">
+        <div className="pl-28 pr-28">
+          <div className="flex items-center gap-28">
+            <div className="flex-1">
+              <h1 className="mb-4 text-4xl font-bold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                {pokemonDetails.name}
+              </h1>
+              <div className="flex gap-2 mb-6">
                 {pokemonDetails.types.map((type) => (
                   <img
                     key={type.type.name}
@@ -35,14 +37,17 @@ const PokeBanner = ({ pokemonId = 6 }) => {
                   />
                 ))}
               </div>
-              <p className="mb-3">
+              <p className="mb-3 w-[80%]">
                 {pokemonSpeciesDetails.flavor_text_entries[6].flavor_text}
               </p>
-              <button type="button" className="button-primary w-100">
+              <button
+                href="#_"
+                class="w-96 h-12 px-10 py-0 text-xl font-semibold text-center text-gray-200 no-underline align-middle transition-all duration-300 ease-in-out bg-transparent border-2 border-gray-600 border-solid rounded-full cursor-pointer select-none hover:text-white hover:border-white focus:shadow-xs focus:no-underline"
+              >
                 Show Details
               </button>
             </div>
-            <div className="col-xl-6 col-sm-12">
+            <div className="flex-2">
               <img
                 loading="lazy"
                 draggable="false"
@@ -63,7 +68,7 @@ const PokemonHeaderLogo = ({ pokemonTheme }) => {
   return createPortal(
     <div
       style={{ backgroundColor: pokemonTypeColorCodes[pokemonTheme] }}
-      className={`bg-${pokemonTheme} d-flex align-items-center justify-content-center`}
+      className={`pt-12 flex items-center justify-center`}
     >
       <PokemonLogo />
     </div>,

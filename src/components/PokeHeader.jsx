@@ -5,7 +5,7 @@ const PokeHeader = () => {
   return (
     <>
       <Suspense fallback="Loading">
-        <PokeBanner pokemonId={22} />
+        <PokeBanner pokemonId={6} />
       </Suspense>
     </>
   );
