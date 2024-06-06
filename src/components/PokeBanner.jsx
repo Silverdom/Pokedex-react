@@ -5,9 +5,9 @@ import PokemonLogo from "./PokemonLogo";
 import { pokemonTypeColorCodes } from "../utility/pokemonTypeColorCodes";
 
 const PokeBanner = ({ pokemonId = 6 }) => {
-  const pokemonDetails = use(getPokemon(pokemonId));
+  const pokemonDetails = use(getPokemon({ pokemonId }));
   const pokemonTheme = pokemonDetails.types[0].type.name;
-  const pokemonSpeciesDetails = use(getPokemonSpecies(pokemonId));
+  const pokemonSpeciesDetails = use(getPokemonSpecies({ pokemonId }));
   const sourceProjectEndpoint = import.meta.env.VITE_SOURCE_URL;
 
   return (
@@ -42,7 +42,7 @@ const PokeBanner = ({ pokemonId = 6 }) => {
               </p>
               <button
                 href="#_"
-                class="w-96 h-12 px-10 py-0 text-xl font-semibold text-center text-gray-200 no-underline align-middle transition-all duration-300 ease-in-out bg-transparent border-2 border-gray-600 border-solid rounded-full cursor-pointer select-none hover:text-white hover:border-white focus:shadow-xs focus:no-underline"
+                className="w-96 h-12 px-10 py-0 text-xl font-semibold text-center text-gray-200 no-underline align-middle transition-all duration-300 ease-in-out bg-transparent border-2 border-gray-600 border-solid rounded-full cursor-pointer select-none hover:text-white hover:border-white focus:shadow-xs focus:no-underline"
               >
                 Show Details
               </button>
@@ -64,7 +64,6 @@ const PokeBanner = ({ pokemonId = 6 }) => {
   );
 };
 const PokemonHeaderLogo = ({ pokemonTheme }) => {
-  console.log(pokemonTheme);
   return createPortal(
     <div
       style={{ backgroundColor: pokemonTypeColorCodes[pokemonTheme] }}
