@@ -1,74 +1,30 @@
-## How to make child component for React Suspense which waits for data
+# React + TypeScript + Vite
 
-The Suspense expects any async child to throw a promise.then.
-Once this promise resolves/rejects Suspense will recall the child component an render the component.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-```JSX
-const data = new Promise((resolve) => {
-  setTimeout(() => {
-    resolve("resolved");
-  }, 3000);
-});
+Currently, two official plugins are available:
 
-let resultData;
-let firstRender = { value: true };
-let completed = false;
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-const PokeBanner = ({ pokemon = 6 }) => {
-  const mySlowFunction = () => {
-    if (firstRender.value) {
-      firstRender.value = false;
-      throw data.then((result) => {
-        resultData = result;
-        completed = true;
-      });
-    } else {
-      if (completed) {
-        return resultData;
-      }
-    }
-  };
+## Expanding the ESLint configuration
 
-  const getData = mySlowFunction();
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-  return <div>{getData}</div>;
-};
+- Configure the top-level `parserOptions` property like this:
+
+```js
+export default {
+  // other rules...
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+  },
+}
 ```
 
-If the above component is wrapped in Suspese the following steps will happen.
-
-1. Child component runs and the mySlowFunction() executes and as it is a first render it throws the promise with then. Suspense will stop executing rest of the code and show fallback content.
-2. When the Promise resolves, Suspense runs the child component again but now te getData has the data in resolve, and the rest of the flow follows
-
-ToNote: We have to make use the promise is created once, if it gets created inside component, the promise will create again when the prev promise resolves and the component will fall into an endless loop.
-
-Once a promise starts with some async work it js will keep track of the state of promise in the same promise object, this helps us achieve the above concept.
-
-```JSX
-let myPromise = new Promise((resolve) => {
-  setTimeout(() => {
-    resolve("done");
-  }, 3000);
-});
-
-myPromise.then((result) => console.log(result));
-
-setInterval(() => {
-  console.log(myPromise);
-}, 1000);
-
-// Output ---
-// Promise {<pending>}
-// Promise {<pending>}
-// Promise {<fulfilled>: 'done'}
-```
-
-## Dynamic classname in tailwind
-
-We cannot use dynamic class as such in tailwind.
-
-```JSX
-bg-${pokemonTheme}
-```
-
-This because when Tailwind compiles its CSS, it looks up over all of your code and checks if a class name matches.
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
