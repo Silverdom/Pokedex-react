@@ -1,7 +1,7 @@
 import { Navigate, RouteObject } from "react-router-dom";
 import { RootLayout } from "@/Layouts/RootLayout";
 import { ErrorPage } from "@/pages/ErrorPage";
-import { PokemonListPage } from "@/pages/pokemon-list/page";
+import { pokemonListPageRoute } from "./pages/pokemon-list";
 
 export const routes: RouteObject[] = [
   {
@@ -17,7 +17,7 @@ export const routes: RouteObject[] = [
           },
           {
             path: "/pokemon-list",
-            element: <PokemonListPage />,
+            ...pokemonListPageRoute,
           },
         ],
       },
