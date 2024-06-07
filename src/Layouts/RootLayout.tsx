@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
-import { PokemonListProvider } from "@/features/components/pokelist";
+import { PokemonListProvider } from "@/features/pokelist";
 import { Outlet, ScrollRestoration } from "react-router-dom";
 
 export function RootLayout() {

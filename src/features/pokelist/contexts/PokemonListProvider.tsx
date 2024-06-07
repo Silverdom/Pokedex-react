@@ -10,7 +10,9 @@ type PokemonListContextType = {
   updatePokemonList: (pokemonList: pokemonShortListType[]) => void;
 };
 
-const PokemonListContext = createContext<PokemonListContextType | null>(null);
+export const PokemonListContext = createContext<PokemonListContextType | null>(
+  null
+);
 
 const PokemonListProvider = ({ children }: PokemonListProviderProps) => {
   let [pokemonList, setPokemonList] = useState<pokemonShortListType[]>([]);

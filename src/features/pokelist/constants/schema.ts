@@ -9,5 +9,5 @@ export const pokemonListSchema = z.object({
   count: z.number(),
   next: z.string().nullable(),
   previous: z.string().nullable(),
-  result: z.array(pokemonShortListSchema)
+  results: z.array(pokemonShortListSchema)
 });

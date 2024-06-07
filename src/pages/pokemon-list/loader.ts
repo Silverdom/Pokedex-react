@@ -1,4 +1,4 @@
-import { getPokemonList } from "@/features/components/pokelist";
+import { getPokemonList } from "@/features/pokelist";
 import { deferredLoader } from "@/lib/ReactRoute";
 
 export const loader = deferredLoader(() => {
