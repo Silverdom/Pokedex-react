@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const pokemonShortListSchema = z.object({
+export const pokemonShortListSchema = z.object({
   name: z.string(),
   url: z.string()
 });
