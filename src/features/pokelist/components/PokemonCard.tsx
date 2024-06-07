@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { usePokemonListContext } from "../hooks/usePokemonListContext";
 
 const extractPokemonDetails = (pokemon: string) => {
   const pokemonDetails = use(getPokemonDetails(pokemon));
@@ -20,9 +21,15 @@ const extractPokemonDetails = (pokemon: string) => {
 
 const PokemonCard = ({ pokemon }: { pokemon: string }) => {
   const pokemonDetails = extractPokemonDetails(pokemon);
+  const { selectPokemon, selectedPokemon } = usePokemonListContext();
   return (
-    <Card className="w-[250px]">
-      <div className="flex justify-center h-[35%]">
+    <Card
+      className={`w-[250px] ${
+        selectedPokemon === pokemonDetails.name ? "scale-105" : undefined
+      } transition duration-100 hover:scale-105 cursor-pointer`}
+      onClick={() => selectPokemon(pokemonDetails.name)}
+    >
+      <div className="flex justify-center h-[100px]">
         <img src={pokemonDetails.sprites.other.showdown.front_default} />
       </div>
       <CardHeader>
@@ -31,7 +38,9 @@ const PokemonCard = ({ pokemon }: { pokemon: string }) => {
       </CardHeader>
       <CardContent className="flex gap-4 justify-evenly">
         {pokemonDetails.types.map((type) => (
-          <Button key={type.type.name}>{type.type.name}</Button>
+          <Button variant="outline" key={type.type.name}>
+            {type.type.name}
+          </Button>
         ))}
       </CardContent>
     </Card>
@@ -41,8 +50,8 @@ const PokemonCard = ({ pokemon }: { pokemon: string }) => {
 export const PokemonCardSkeleton = () => {
   return (
     <Card className="w-[250px] h-[250px]">
-      <div className="flex justify-center h-[35%] mb-3">
-        <Skeleton className="h-[100px] w-[100px]" />
+      <div className="flex justify-center h-[100px] mb-3">
+        <Skeleton className="w-[100px]" />
       </div>
       <CardHeader>
         <span className="flex justify-center">

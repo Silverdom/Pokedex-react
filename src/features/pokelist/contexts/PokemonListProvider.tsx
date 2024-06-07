@@ -10,6 +10,8 @@ type PokemonListContextType = {
   pokemonList: pokemonShortListType[];
   updatePokemonList: (pokemonList: pokemonShortListType[]) => void;
   isPokemonLoading: boolean;
+  selectedPokemon: string;
+  selectPokemon: (pokemon: string) => void;
 };
 
 export const PokemonListContext = createContext<PokemonListContextType | null>(
@@ -19,6 +21,7 @@ export const PokemonListContext = createContext<PokemonListContextType | null>(
 const PokemonListProvider = ({ children }: PokemonListProviderProps) => {
   let [pokemonList, setPokemonList] = useState<pokemonShortListType[]>([]);
   let [isPokemonLoading, setPokemonLoading] = useState<boolean>(true);
+  let [selectedPokemon, setSelectedPokemon] = useState<string>("");
 
   useEffect(() => {
     setPokemonLoading(true);
@@ -33,6 +36,10 @@ const PokemonListProvider = ({ children }: PokemonListProviderProps) => {
       });
   }, []);
 
+  const selectPokemon = (pokemon: string) => {
+    setSelectedPokemon(pokemon);
+  };
+
   const updatePokemonList = (pokemonList: pokemonShortListType[]) => {
     setPokemonList(pokemonList);
   };
@@ -43,6 +50,8 @@ const PokemonListProvider = ({ children }: PokemonListProviderProps) => {
         pokemonList,
         updatePokemonList,
         isPokemonLoading,
+        selectedPokemon,
+        selectPokemon,
       }}
     >
       {children}

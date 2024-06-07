@@ -6,7 +6,7 @@ import PokemonCard, { PokemonCardSkeleton } from "./PokemonCard";
 
 type PokemonListViewComponentProps = {};
 
-const LIMIT = 20;
+const LIMIT = 15;
 
 const getNextPokemons = (
   page: number,
@@ -42,7 +42,7 @@ const PokemonListViewComponent = ({}: PokemonListViewComponentProps) => {
   };
 
   return (
-    <div className="grid grid-cols-4 gap-8">
+    <div className="flex flex-col sm:grid grid-cols-3 gap-6 items-center">
       {pokemonListRef.current.map((pokemon) => {
         return (
           <Suspense
