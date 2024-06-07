@@ -1,5 +1,6 @@
-import React, { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useEffect, useState } from "react";
 import { pokemonShortListType } from "../constants/types";
+import { getPokemonList } from "..";
 
 type PokemonListProviderProps = {
   children: ReactNode;
@@ -8,10 +9,8 @@ type PokemonListProviderProps = {
 type PokemonListContextType = {
   pokemonList: pokemonShortListType[];
   updatePokemonList: (pokemonList: pokemonShortListType[]) => void;
-  getNextPokemons: (
-    page: number,
-    limit: number
-  ) => pokemonShortListType[] | undefined;
+  getNextPokemons: (page: number, limit: number) => pokemonShortListType[] | [];
+  isPokemonLoading: boolean;
 };
 
 export const PokemonListContext = createContext<PokemonListContextType | null>(
@@ -20,6 +19,19 @@ export const PokemonListContext = createContext<PokemonListContextType | null>(
 
 const PokemonListProvider = ({ children }: PokemonListProviderProps) => {
   let [pokemonList, setPokemonList] = useState<pokemonShortListType[]>([]);
+  let [isPokemonLoading, setPokemonLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    setPokemonLoading(true);
+    getPokemonList(1000000, 0)
+      .then((data) => {
+        // console.log(data);
+        setPokemonList(data.results);
+      })
+      .finally(() => {
+        setPokemonLoading(false);
+      });
+  }, []);
 
   const updatePokemonList = (pokemonList: pokemonShortListType[]) => {
     setPokemonList(pokemonList);
@@ -33,7 +45,7 @@ const PokemonListProvider = ({ children }: PokemonListProviderProps) => {
       end = totalPokemons;
     }
     if (start >= totalPokemons) {
-      return undefined;
+      return [];
     }
 
     return pokemonList.slice(start, end);
@@ -41,7 +53,12 @@ const PokemonListProvider = ({ children }: PokemonListProviderProps) => {
 
   return (
     <PokemonListContext.Provider
-      value={{ pokemonList, updatePokemonList, getNextPokemons }}
+      value={{
+        pokemonList,
+        updatePokemonList,
+        getNextPokemons,
+        isPokemonLoading,
+      }}
     >
       {children}
     </PokemonListContext.Provider>
