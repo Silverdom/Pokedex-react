@@ -11,11 +11,7 @@ export const PokemonListPage = () => {
     <div className="flex flex-row gap-4 justify-between">
       <section className="flex flex-col gap-10">
         <PokemonListFiltersComponent />
-        <div>
-          <div className="grid grid-cols-3 gap-4">
-            {!isPokemonLoading && <PokemonListViewComponent />}
-          </div>
-        </div>
+        <div>{!isPokemonLoading && <PokemonListViewComponent />}</div>
       </section>
       <section>
         <IndividualPokemonViewComponent />

@@ -1,11 +1,12 @@
-import { useRef, useState } from "react";
+import { Suspense, useRef, useState } from "react";
 import { usePokemonListContext } from "../hooks/usePokemonListContext";
 import { pokemonShortListType } from "../constants/types";
 import { Button } from "@/components/ui/button";
+import PokemonCard, { PokemonCardSkeleton } from "./PokemonCard";
 
 type PokemonListViewComponentProps = {};
 
-const LIMIT = 15;
+const LIMIT = 20;
 
 const getNextPokemons = (
   page: number,
@@ -41,17 +42,30 @@ const PokemonListViewComponent = ({}: PokemonListViewComponentProps) => {
   };
 
   return (
-    <>
-      {pokemonListRef.current.map((pokemon) => (
-        <p key={pokemon.name}>{pokemon.name}</p>
-      ))}
+    <div className="grid grid-cols-4 gap-8">
+      {pokemonListRef.current.map((pokemon) => {
+        return (
+          <Suspense
+            fallback={<PokemonCardFallbackContent />}
+            key={pokemon.name}
+          >
+            <PokemonCard key={pokemon.name} pokemon={pokemon.name} />
+          </Suspense>
+        );
+      })}
       {pageNumber * LIMIT >= pokemonList.length - 1 ? undefined : (
         <Button variant="outline" onClick={handleLoadMore}>
           Load More
         </Button>
       )}
-    </>
+    </div>
   );
+};
+
+const PokemonCardFallbackContent = () => {
+  const datas = Array.from(Array(LIMIT).keys());
+
+  return datas.map((data) => <PokemonCardSkeleton key={data} />);
 };
 
 export default PokemonListViewComponent;
