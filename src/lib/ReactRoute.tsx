@@ -26,6 +26,12 @@ export function useDeferredLoaderData<
   return useLoaderData() as ReturnType<T>["data"];
 }
 
+export function useGenericLoaderData<T>() {
+  return useLoaderData() as T;
+}
+
+export function genericLoader() {}
+
 type ModifiedAwaitResolveRenderFunction<T> = (data: T) => ReactNode;
 // type ModifiedAwaitResolveRenderFunction<T> = (data: Awaited<T>) => ReactNode;
 
