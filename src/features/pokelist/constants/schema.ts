@@ -1,3 +1,4 @@
+import { POKEMON_TYPES } from "@/constants/pokemonTypeColor";
 import { z } from "zod";
 
 export const pokemonShortListSchema = z.object({
@@ -40,7 +41,7 @@ export const pokemonSchema = z.object({
   types: z.array(z.object({
     slot: z.number(),
     type: z.object({
-      name: z.string(),
+      name: z.enum(POKEMON_TYPES),
       url: z.string()
     })
   })),
@@ -59,4 +60,11 @@ export const pokemonSchema = z.object({
       url: z.string()
     })
   }))
+});
+
+export const filters = z.object({
+  search: z.string(),
+  min: z.number(),
+  max: z.number(),
+  type: z.enum(POKEMON_TYPES),
 });

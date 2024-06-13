@@ -1,4 +1,3 @@
-import { pokemonType } from "@/features/pokelist/constants/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 

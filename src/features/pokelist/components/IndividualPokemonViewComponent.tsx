@@ -1,5 +1,4 @@
 import { use } from "@/lib/utils";
-import { usePokemonListContext } from "../hooks/usePokemonListContext";
 import {
   getPokemonDetails,
   getPokemonSpeciesDetails,

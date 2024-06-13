@@ -10,6 +10,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePokemonListContext } from "../hooks/usePokemonListContext";
+import { POKEMON_TYPES } from "@/constants/pokemonTypeColor";
+import { pokemonTypeName } from "../constants/types";
 
 const extractPokemonDetails = (pokemon: string) => {
   const pokemonDetails = use(getPokemonDetails(pokemon));
@@ -18,6 +20,17 @@ const extractPokemonDetails = (pokemon: string) => {
   }
   return pokemonDetails;
 };
+
+type Colors = {
+  [key in pokemonTypeName]?: string;
+};
+
+const colors: Colors = {};
+
+for (let i = 0; i < POKEMON_TYPES.length; i++) {
+  const pokemonType = POKEMON_TYPES[i];
+  colors[pokemonType] = `bg-${pokemonType}`;
+}
 
 const PokemonCard = ({ pokemon }: { pokemon: string }) => {
   const pokemonDetails = extractPokemonDetails(pokemon);
@@ -38,7 +51,11 @@ const PokemonCard = ({ pokemon }: { pokemon: string }) => {
       </CardHeader>
       <CardContent className="flex gap-4 justify-evenly">
         {pokemonDetails.types.map((type) => (
-          <Button variant="outline" key={type.type.name}>
+          <Button
+            variant="outline"
+            key={type.type.name}
+            className={colors[type.type.name] ?? undefined}
+          >
             {type.type.name}
           </Button>
         ))}
